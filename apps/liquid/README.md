@@ -1,21 +1,5 @@
 # Liquid
 
-**TODO: Add description**
+`liquid` flow 数据加工层
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `liquid` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:liquid, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/liquid](https://hexdocs.pm/liquid).
-
+该项目通过读取数据, 进行加工, 最终将结果存储会数据库中
