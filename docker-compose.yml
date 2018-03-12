@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+      - ./docker/mysql:/etc/mysql/conf.d
+    ports:
+      - ${DB_PORT}:3306
+
+  sentry-base: &sentry-base
+    restart: unless-stopped
+    build: docker/sentry
+    environment:
+      # Run `docker-compose run web config generate-secret-key`
+      # to get the SENTRY_SECRET_KEY value.
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_MEMCACHED_HOST: memcached
+      SENTRY_REDIS_HOST: redis
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_EMAIL_HOST: smtp
+    volumes:
+      - ./volumes/sentry:/var/lib/sentry/files
+  
+  smtp:
+    restart: unless-stopped
+    image: tianon/exim4
+
+  memcached:
+    restart: unless-stopped
+    image: memcached:1.4
+
+  redis:
+    restart: unless-stopped
+    image: redis:3.2-alpine
+
+  postgres:
+    restart: unless-stopped
+    image: postgres:9.5
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+
+  sentry:
+    <<: *sentry-base
+    links:
+      - redis
+      - postgres
+      - memcached
+      - smtp
+    ports:
+      - '9000:9000'
+  
+  cron:
+    <<: *sentry-base
+    command: run cron
+    links:
+      - redis
+      - postgres
+      - memcached
+      - smtp
+  
+  worker:
+    <<: *sentry-base
+    command: run worker
+    links:
+      - redis
+      - postgres
+      - memcached
+      - smtp
+
