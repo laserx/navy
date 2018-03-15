@@ -12,8 +12,8 @@ config :wharf,
 # Configures the endpoint
 config :wharf, WharfWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "JUENhNTnZWcHsqtX4TaT0FmXIwCrktx13/oN3yQBpPFGqR74fMm5bezE0F9TUsG3",
-  render_errors: [view: WharfWeb.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "JooePK0WM1Fjbfx0bfTOe/L11ENkt/78vkqMVM04zaDMrvsRA3NJqj9kSYK2pDL+",
+  render_errors: [view: WharfWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Wharf.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
