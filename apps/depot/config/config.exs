@@ -10,5 +10,4 @@ config :depot, Depot.Repo,
   hostname: "127.0.0.1",
   port: 3330
 
-config :depot,
-  ecto_repos: [Depot.Repo]
+config :depot, ecto_repos: [Depot.Repo]
